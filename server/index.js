@@ -21,10 +21,12 @@ app.get('/', (req, res) => {
 const authRoutes = require('./routes/authRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
+const savedJobRoutes = require('./routes/savedJobRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/jobs', jobRoutes);
 app.use('/applications', applicationRoutes);
+app.use('/saved-jobs', savedJobRoutes);
 
 // Sync Database and Start Server
 sequelize.sync({ alter: true }) // alter: true updates tables if models change

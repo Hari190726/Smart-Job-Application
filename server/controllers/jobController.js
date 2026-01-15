@@ -51,7 +51,7 @@ const getAllJobs = async (req, res) => {
         {
           model: User,
           as: 'recruiter',
-          attributes: ['name', 'email'],
+          attributes: ['name', 'email', 'company_name', 'company_logo'],
         },
       ],
     });
@@ -70,7 +70,7 @@ const getJobById = async (req, res) => {
         {
           model: User,
           as: 'recruiter',
-          attributes: ['name', 'email'],
+          attributes: ['name', 'email', 'company_name', 'company_website', 'company_description', 'company_logo'],
         },
       ],
     });
@@ -86,4 +86,30 @@ const getJobById = async (req, res) => {
   }
 };
 
-module.exports = { createJob, getAllJobs, getJobById };
+const getRelatedJobs = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const currentJob = await Job.findByPk(id);
+
+    if (!currentJob) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    // Find jobs with same location OR overlapping tags, excluding current job
+    const relatedJobs = await Job.findAll({
+      where: {
+        location: currentJob.location,
+        id: { [Op.ne]: id } // Exclude current job
+      },
+      limit: 3,
+      include: [{ model: User, as: 'recruiter', attributes: ['name', 'company_name', 'company_logo'] }]
+    });
+
+    res.json(relatedJobs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { createJob, getAllJobs, getJobById, getRelatedJobs };

@@ -28,6 +28,22 @@ const User = sequelize.define('User', {
     allowNull: false,
     defaultValue: 'candidate',
   },
+  company_name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  company_website: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  company_description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  company_logo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 module.exports = User;
