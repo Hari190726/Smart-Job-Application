@@ -47,7 +47,7 @@ A full-stack job portal application connecting candidates with recruiters. Built
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone : https://github.com/Hari190726/Smart-Job-Application.git
 cd job-portal
 ```
 
